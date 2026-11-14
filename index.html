@@ -1,0 +1,1946 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tekkali Digital & Web Solutions Hub - Enterprise ERP</title>
+    <!-- Google Font & FontAwesome Icons -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        :root {
+            --primary: #3b82f6;
+            --primary-hover: #2563eb;
+            --bg-dark: #090d16;
+            --card-bg: rgba(18, 26, 43, 0.85);
+            --border-color: rgba(255, 255, 255, 0.08);
+            --text-main: #f1f5f9;
+            --text-muted: #94a3b8;
+            --success: #10b981;
+            --danger: #ef4444;
+            --warning: #f59e0b;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            background-image: 
+                radial-gradient(at 0% 0%, rgba(59, 130, 246, 0.12) 0px, transparent 50%),
+                radial-gradient(at 100% 100%, rgba(139, 92, 246, 0.12) 0px, transparent 50%);
+            color: var(--text-main);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 24px 16px;
+        }
+
+        .container {
+            background: var(--card-bg);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid var(--border-color);
+            padding: 35px;
+            border-radius: 20px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.6);
+            width: 100%;
+            max-width: 1120px;
+        }
+
+        h2 {
+            text-align: center;
+            color: #ffffff;
+            font-size: 22px;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+        }
+
+        .subtitle {
+            text-align: center;
+            font-size: 13px;
+            color: var(--text-muted);
+            margin-bottom: 25px;
+            font-weight: 500;
+        }
+
+        .form-group {
+            margin-bottom: 14px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 6px;
+            color: #cbd5e1;
+            font-size: 12px;
+            font-weight: 600;
+            letter-spacing: 0.2px;
+        }
+
+        input, textarea, select {
+            width: 100%;
+            padding: 10px 14px;
+            background: rgba(10, 15, 26, 0.7);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            color: #fff;
+            font-size: 13.5px;
+            transition: all 0.2s ease;
+        }
+
+        input:focus, textarea:focus, select:focus {
+            border-color: var(--primary);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.25);
+            background: rgba(15, 23, 42, 0.9);
+        }
+
+        input:disabled, textarea:disabled {
+            background: rgba(15, 23, 42, 0.4);
+            color: #64748b;
+            cursor: not-allowed;
+            border-color: rgba(255, 255, 255, 0.05);
+        }
+
+        .btn {
+            width: 100%;
+            padding: 11px 16px;
+            background: linear-gradient(135deg, var(--primary), var(--primary-hover));
+            border: none;
+            color: white;
+            font-size: 14px;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: transform 0.1s, opacity 0.2s;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            box-shadow: 0 4px 14px rgba(59, 130, 246, 0.35);
+        }
+
+        .btn:hover { opacity: 0.92; }
+        .btn:active { transform: scale(0.98); }
+
+        .panel { display: none; }
+
+        .info-card {
+            background: rgba(10, 15, 26, 0.55);
+            padding: 18px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            border: 1px solid var(--border-color);
+            border-left: 4px solid var(--primary);
+            font-size: 13px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+            font-size: 12.5px;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        table, th, td {
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        th, td {
+            padding: 10px 12px;
+            text-align: left;
+        }
+
+        th {
+            background-color: rgba(26, 38, 64, 0.8);
+            color: #f8fafc;
+            font-weight: 600;
+        }
+
+        td { color: #cbd5e1; }
+
+        .logout-btn {
+            background: linear-gradient(135deg, #ef4444, #dc2626);
+            box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
+            margin-top: 22px;
+        }
+
+        .error-msg {
+            color: #f87171;
+            font-size: 12.5px;
+            text-align: center;
+            margin-top: 12px;
+            font-weight: 600;
+        }
+
+        .success-msg {
+            color: #34d399;
+            font-size: 12.5px;
+            text-align: center;
+            margin-top: 8px;
+            font-weight: 600;
+        }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+        @media (max-width: 680px) {
+            .grid-2, .grid-3 { grid-template-columns: 1fr !important; }
+        }
+
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+        }
+
+        .profile-flex {
+            display: flex;
+            align-items: center;
+            gap: 18px;
+        }
+
+        .profile-avatar {
+            width: 72px;
+            height: 72px;
+            border-radius: 50%;
+            background: #1e293b;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            color: #f8fafc;
+            border: 2px solid var(--primary);
+            overflow: hidden;
+            flex-shrink: 0;
+        }
+
+        .profile-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .pulse-box {
+            background: rgba(239, 68, 68, 0.12);
+            border: 1px dashed #ef4444;
+            padding: 16px;
+            border-radius: 12px;
+            margin-bottom: 18px;
+            text-align: center;
+            animation: pulseGlow 2s infinite alternate;
+        }
+
+        @keyframes pulseGlow {
+            0% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.3); }
+            100% { box-shadow: 0 0 15px 2px rgba(239, 68, 68, 0.15); }
+        }
+
+        .action-btn {
+            border: none;
+            padding: 6px 10px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 11px;
+            font-weight: 600;
+            color: white;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            transition: opacity 0.2s;
+        }
+        .action-btn:hover { opacity: 0.88; }
+        .btn-add { background: var(--primary); }
+        .btn-clear { background: var(--warning); color: #000; }
+        .btn-delete { background: var(--danger); }
+        .btn-invoice { background: #8b5cf6; }
+
+        .tabs {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 20px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            padding-bottom: 12px;
+            overflow-x: auto;
+        }
+
+        .tab-btn {
+            padding: 8px 16px;
+            background: rgba(15, 23, 42, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            color: var(--text-muted);
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 12.5px;
+            font-weight: 600;
+            white-space: nowrap;
+            transition: all 0.2s ease;
+        }
+
+        .tab-btn.active {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+            box-shadow: 0 4px 10px rgba(59, 130, 246, 0.3);
+        }
+
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.75);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            padding: 15px;
+        }
+
+        .modal-content {
+            background: #0f172a;
+            padding: 30px;
+            border-radius: 16px;
+            width: 100%;
+            max-width: 550px;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            color: #fff;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.5);
+        }
+
+        .badge {
+            padding: 3px 8px;
+            border-radius: 6px;
+            font-size: 11px;
+            font-weight: 700;
+            display: inline-block;
+        }
+        .badge-pending { background: rgba(245, 158, 11, 0.2); color: #fbbf24; }
+        .badge-progress { background: rgba(59, 130, 246, 0.2); color: #60a5fa; }
+        .badge-success { background: rgba(16, 185, 129, 0.2); color: #34d399; }
+        .badge-danger { background: rgba(239, 68, 68, 0.2); color: #f87171; }
+
+        .stat-card {
+            background: rgba(10, 15, 26, 0.6);
+            padding: 18px;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            text-align: center;
+        }
+        .stat-card h4 { font-size: 11px; color: var(--text-muted); margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.5px; }
+        .stat-card p { font-size: 22px; font-weight: 800; color: #38bdf8; }
+
+        /* Print Media Style: Pristine Paper Receipt */
+        @media print {
+            body {
+                background: #ffffff !important;
+                color: #000000 !important;
+                padding: 0;
+            }
+            .container, .tabs, .logout-btn, .action-btn, #adminPanel, #employeePanel, #loginPanel {
+                display: none !important;
+            }
+            .modal {
+                display: block !important;
+                position: static !important;
+                background: transparent !important;
+                padding: 0 !important;
+            }
+            .modal-content {
+                border: none !important;
+                background: #ffffff !important;
+                color: #000000 !important;
+                box-shadow: none !important;
+                max-width: 100% !important;
+                padding: 0 !important;
+            }
+            .no-print { display: none !important; }
+            table, th, td {
+                border: 1px solid #ddd !important;
+                color: #000 !important;
+            }
+            th { background: #f1f5f9 !important; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 1. Login Panel -->
+    <div class="container" id="loginPanel" style="max-width: 440px;">
+        <h2><i class="fa-solid fa-shield-halved" style="color: var(--primary);"></i> Tekkali Digital Hub</h2>
+        <div class="subtitle">Secure Enterprise ERP & Operations System</div>
+        
+        <div class="form-group">
+            <label><i class="fa-regular fa-id-badge"></i> Employee / Admin ID</label>
+            <input type="text" id="loginId" placeholder="e.g. ADMIN, TEK101, MKT201, SUP301" autocomplete="username">
+        </div>
+        <div class="form-group">
+            <label><i class="fa-solid fa-lock"></i> Secure Passcode</label>
+            <input type="password" id="loginPass" placeholder="Enter secure passcode" autocomplete="current-password">
+        </div>
+        <button class="btn" onclick="handleLogin()"><i class="fa-solid fa-arrow-right-to-bracket"></i> Sign In to Dashboard</button>
+        <div class="error-msg" id="loginError"></div>
+    </div>
+
+    <!-- 2. Master Admin Panel -->
+    <div class="container panel" id="adminPanel">
+        <h2><i class="fa-solid fa-sliders" style="color: var(--primary);"></i> Master Admin Control Center</h2>
+        <div class="subtitle">Tekkali Digital & Web Solutions Hub • Corporate Administration</div>
+
+        <div class="tabs">
+            <button class="tab-btn active" onclick="switchAdminTab('overviewTab', this)"><i class="fa-solid fa-chart-pie"></i> System Overview</button>
+            <button class="tab-btn" onclick="switchAdminTab('staffTab', this)"><i class="fa-solid fa-users"></i> Staff & Accounts</button>
+            <button class="tab-btn" onclick="switchAdminTab('tasksTab', this)"><i class="fa-solid fa-diagram-project"></i> Project Control</button>
+            <button class="tab-btn" onclick="switchAdminTab('financeTab', this)"><i class="fa-solid fa-receipt"></i> Client Accounts & Ledger</button>
+            <button class="tab-btn" onclick="switchAdminTab('supportLogsTab', this)"><i class="fa-solid fa-headset"></i> Support Logs</button>
+            <button class="tab-btn" onclick="switchAdminTab('attendanceTab', this)"><i class="fa-solid fa-bell"></i> Live Attendance</button>
+            <button class="tab-btn" onclick="switchAdminTab('leavesTab', this)"><i class="fa-solid fa-calendar-check"></i> Leave Requests</button>
+        </div>
+
+        <!-- TAB 1: OVERVIEW -->
+        <div id="overviewTab" class="tab-content active">
+            <div class="grid-3" style="margin-bottom: 20px;">
+                <div class="stat-card">
+                    <h4>Total Active Staff</h4>
+                    <p id="statTotalStaff">0</p>
+                </div>
+                <div class="stat-card">
+                    <h4>Total Revenue Collected</h4>
+                    <p id="statTotalRev" style="color: var(--success);">₹0</p>
+                </div>
+                <div class="stat-card">
+                    <h4>Outstanding Receivables</h4>
+                    <p id="statTotalPend" style="color: #f87171;">₹0</p>
+                </div>
+            </div>
+
+            <div class="info-card">
+                <h3 style="color: #f8fafc; font-size: 14px; margin-bottom: 8px;"><i class="fa-solid fa-bullhorn" style="color: #8b5cf6;"></i> Quick Broadcast Announcement</h3>
+                <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+                    <input type="text" id="sysNoticeInput" placeholder="Enter broadcast notice for all employees..." style="flex: 1; min-width: 260px;">
+                    <button class="btn" style="width: auto; padding: 0 20px; background: #8b5cf6;" onclick="postAnnouncement()">Broadcast</button>
+                </div>
+            </div>
+
+            <div class="info-card" style="border-left-color: var(--success);">
+                <h3 style="color: var(--success); font-size: 14px; margin-bottom: 8px;"><i class="fa-solid fa-database"></i> Disaster Recovery & Backup</h3>
+                <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+                    <button onclick="exportDataBackup()" style="background: #0ea5e9; color: white; border: none; padding: 10px 16px; border-radius: 8px; cursor: pointer; font-size: 12.5px; font-weight: 600;">
+                        <i class="fa-solid fa-download"></i> Export JSON Backup
+                    </button>
+                    <button onclick="triggerDataRestore()" style="background: #64748b; color: white; border: none; padding: 10px 16px; border-radius: 8px; cursor: pointer; font-size: 12.5px; font-weight: 600;">
+                        <i class="fa-solid fa-upload"></i> Restore from File
+                    </button>
+                    <input type="file" id="restoreFile" style="display: none;" onchange="importDataBackup(event)" accept=".json">
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB 2: STAFF MANAGEMENT -->
+        <div id="staffTab" class="tab-content">
+            <div style="background: rgba(10, 15, 26, 0.5); padding: 18px; border-radius: 12px; margin-bottom: 18px; border: 1px solid var(--border-color);">
+                <h3 style="font-size: 14px; margin-bottom: 12px; color: #f8fafc;"><i class="fa-solid fa-user-plus" style="color: #0ea5e9;"></i> Register New Staff Member</h3>
+                <div class="grid-2">
+                    <div class="form-group">
+                        <label>Staff Legal Full Name</label>
+                        <input type="text" id="newEmpName" placeholder="e.g. Ramesh Kumar">
+                    </div>
+                    <div class="form-group">
+                        <label>Designation / Role</label>
+                        <select id="newEmpRole">
+                            <option value="developer">Developer (Technical)</option>
+                            <option value="marketing">Marketing Executive (Sales)</option>
+                            <option value="support">Customer Support Executive (Calls)</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="grid-2">
+                    <div class="form-group">
+                        <label>Mobile Number</label>
+                        <input type="tel" id="newEmpPhone" placeholder="10-digit mobile number" maxlength="10">
+                    </div>
+                    <div class="form-group">
+                        <label>Official Email</label>
+                        <input type="email" id="newEmpEmail" placeholder="employee@tekkali.hub">
+                    </div>
+                </div>
+                <div class="grid-2">
+                    <div class="form-group">
+                        <label>Address / Base Location</label>
+                        <input type="text" id="newEmpAddress" placeholder="e.g. Main Road, Tekkali">
+                    </div>
+                    <div class="form-group">
+                        <label>Assigned Initial Passcode</label>
+                        <input type="text" id="newEmpPass" placeholder="e.g. Pass@123">
+                    </div>
+                </div>
+                <button class="btn" style="background: #0ea5e9; margin-top: 6px;" onclick="createEmployee()">
+                    <i class="fa-solid fa-id-card"></i> Provision Staff Account
+                </button>
+                <div class="success-msg" id="empCreateMsg"></div>
+            </div>
+
+            <h3 style="font-size: 14px; color: #f8fafc; margin-bottom: 10px;"><i class="fa-solid fa-user-shield"></i> Active Accounts & Security Management</h3>
+            <div style="max-height: 270px; overflow-y: auto; border-radius: 10px;">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Staff ID & Full Name</th>
+                            <th>Role</th>
+                            <th>Contact Info</th>
+                            <th>Passcode</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="staffTableBody"></tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- TAB 3: PROJECT CONTROL -->
+        <div id="tasksTab" class="tab-content">
+            <div style="background: rgba(10, 15, 26, 0.5); padding: 18px; border-radius: 12px; margin-bottom: 18px; border: 1px solid var(--border-color);">
+                <h3 style="font-size: 14px; margin-bottom: 12px; color: #fbbf24;"><i class="fa-solid fa-list-check"></i> Assign New Project to Developer</h3>
+                <div class="grid-2">
+                    <div class="form-group">
+                        <label>Select Target Developer</label>
+                        <select id="targetEmpSelect"></select>
+                    </div>
+                    <div class="form-group">
+                        <label>Priority Level</label>
+                        <select id="projectPriority">
+                            <option value="Normal">Normal Priority</option>
+                            <option value="High">High Priority</option>
+                            <option value="Urgent">⚡ Critical / Urgent</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="grid-2">
+                    <div class="form-group">
+                        <label>Project Title</label>
+                        <input type="text" id="projectTitle" placeholder="e.g. Tekkali E-Commerce Portal">
+                    </div>
+                    <div class="form-group">
+                        <label>Target Delivery Date</label>
+                        <input type="date" id="projectDeadline">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Architecture & Delivery Instructions</label>
+                    <textarea id="projectDesc" rows="2" placeholder="Specify tech stack and delivery guidelines..."></textarea>
+                </div>
+                <button class="btn" style="background: var(--success);" onclick="assignProject()">
+                    <i class="fa-solid fa-paper-plane"></i> Dispatch Project Assignment
+                </button>
+                <div class="success-msg" id="adminMsg"></div>
+            </div>
+
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                <h3 style="font-size: 14px; color: #f8fafc;"><i class="fa-solid fa-folder-tree"></i> Project Deployment Pipeline</h3>
+                <button onclick="viewAllArchivedProjects()" style="background: #334155; color: white; border: none; padding: 6px 12px; border-radius: 6px; cursor: pointer; font-size: 11.5px;">
+                    <i class="fa-solid fa-file-lines"></i> Export Text Log
+                </button>
+            </div>
+            <div style="max-height: 250px; overflow-y: auto; border-radius: 10px;">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Assigned To</th>
+                            <th>Project Title</th>
+                            <th>Target Deadline</th>
+                            <th>Priority</th>
+                            <th>Status Stage</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="adminProjectsTableBody"></tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- TAB 4: FINANCE & SALES -->
+        <div id="financeTab" class="tab-content">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; gap: 10px; flex-wrap: wrap;">
+                <h3 style="font-size: 14px; color: #f8fafc;"><i class="fa-solid fa-scale-balanced"></i> Client Accounts Receivable</h3>
+                <input type="text" id="adminSearchClient" placeholder="🔍 Search client by name or phone..." onkeyup="filterAdminLeads()" style="width: 280px; padding: 8px 12px; font-size: 12.5px;">
+            </div>
+            <div style="max-height: 320px; overflow-y: auto; border-radius: 10px;">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Client & Rep</th>
+                            <th>Contract Value</th>
+                            <th>Total Received</th>
+                            <th>Balance Remaining</th>
+                            <th>Payment Reconciliation</th>
+                        </tr>
+                    </thead>
+                    <tbody id="leadsTableBody"></tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- TAB 5: CUSTOMER SUPPORT CALL LOGS -->
+        <div id="supportLogsTab" class="tab-content">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; gap: 10px; flex-wrap: wrap;">
+                <h3 style="font-size: 14px; color: #f8fafc;"><i class="fa-solid fa-headset"></i> Customer Support Call & Ticket Logs</h3>
+                <input type="text" id="adminSearchSupport" placeholder="🔍 Search caller name, phone, or agent..." onkeyup="filterAdminSupportLogs()" style="width: 280px; padding: 8px 12px; font-size: 12.5px;">
+            </div>
+            <div style="max-height: 320px; overflow-y: auto; border-radius: 10px;">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Caller & Contact</th>
+                            <th>Call Category</th>
+                            <th>Issue / Call Notes</th>
+                            <th>Handled By</th>
+                            <th>Status & Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="adminSupportTableBody"></tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- TAB 6: ATTENDANCE CONTROL -->
+        <div id="attendanceTab" class="tab-content">
+            <div style="background: rgba(10, 15, 26, 0.5); padding: 18px; border-radius: 12px; margin-bottom: 18px; border: 1px solid rgba(239, 68, 68, 0.25);">
+                <h3 style="font-size: 14px; margin-bottom: 6px; color: #f87171;"><i class="fa-solid fa-stopwatch"></i> Surprise Attendance Verification</h3>
+                <p style="font-size: 12px; color: var(--text-muted); margin-bottom: 12px;">Trigger a real-time presence audit. Employees must authenticate before the countdown window elapses.</p>
+                <div style="display: flex; gap: 10px; align-items: center; flex-wrap: wrap;">
+                    <select id="attendanceDuration" style="width: 200px;">
+                        <option value="2">2 Minutes Countdown</option>
+                        <option value="3">3 Minutes Countdown</option>
+                        <option value="5">5 Minutes Countdown</option>
+                        <option value="10">10 Minutes Countdown</option>
+                    </select>
+                    <button class="btn" style="background: var(--danger); width: auto; padding: 10px 20px;" onclick="triggerAttendanceAlert()">
+                        <i class="fa-solid fa-satellite-dish"></i> Broadcast Surprise Call
+                    </button>
+                </div>
+                <div class="success-msg" id="attendanceBroadcastMsg"></div>
+            </div>
+
+            <h3 style="font-size: 14px; color: #f8fafc; margin-bottom: 10px;"><i class="fa-solid fa-clipboard-user"></i> Attendance Audit Results</h3>
+            <div style="max-height: 250px; overflow-y: auto; border-radius: 10px;">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Staff ID & Full Name</th>
+                            <th>Attendance Status</th>
+                            <th>Authentication Timestamp</th>
+                        </tr>
+                    </thead>
+                    <tbody id="adminAttendanceTableBody"></tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- TAB 7: LEAVE REQUESTS -->
+        <div id="leavesTab" class="tab-content">
+            <h3 style="font-size: 14px; color: #f8fafc; margin-bottom: 10px;"><i class="fa-solid fa-envelope-open-text"></i> Staff Leave Applications</h3>
+            <div style="max-height: 320px; overflow-y: auto; border-radius: 10px;">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Staff ID & Name</th>
+                            <th>Leave Date</th>
+                            <th>Reason</th>
+                            <th>Status & Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="adminLeavesTableBody"></tbody>
+                </table>
+            </div>
+        </div>
+
+        <button class="btn logout-btn" onclick="handleLogout()"><i class="fa-solid fa-power-off"></i> Secure System Logout</button>
+    </div>
+
+    <!-- 3. Employee Dashboard -->
+    <div class="container panel" id="employeePanel">
+        <h2><i class="fa-solid fa-briefcase" style="color: var(--primary);"></i> Staff Operations Portal</h2>
+        <div class="subtitle">Tekkali Digital & Web Solutions Hub</div>
+        
+        <!-- Broadcast Alert -->
+        <div id="sysNoticeBanner" style="display:none; background: rgba(59, 130, 246, 0.12); border: 1px solid var(--primary); padding: 12px; border-radius: 10px; margin-bottom: 16px; text-align: center;">
+            <p style="font-size: 11px; color: #94a3b8; font-weight: 700; text-transform: uppercase;">📢 Broadcast Notice</p>
+            <p id="sysNoticeText" style="font-size: 13.5px; color: #f8fafc; font-weight: 600; margin-top: 2px;"></p>
+        </div>
+
+        <!-- Surprise Attendance Banner -->
+        <div id="attendanceAlertBanner" style="display:none;" class="pulse-box">
+            <h3 style="color: #f87171; font-size: 15px; margin-bottom: 4px;"><i class="fa-solid fa-bell"></i> Live Attendance Audit Window Active</h3>
+            <p style="font-size: 12.5px; color: #f8fafc; margin-bottom: 8px;">Remaining window: <strong id="attendanceTimer" style="font-size: 16px; color: #fbbf24;">00:00</strong></p>
+            <button class="btn" style="background: var(--success); width: auto; padding: 10px 24px; margin: 0 auto;" onclick="markAttendanceNow()">
+                <i class="fa-solid fa-check"></i> Register Presence Now
+            </button>
+            <div id="attendanceResultMsg" style="font-size: 12.5px; margin-top: 6px; font-weight: 600;"></div>
+        </div>
+
+        <!-- Profile Card -->
+        <div class="info-card">
+            <div class="profile-flex">
+                <div class="profile-avatar" id="empAvatarBox">
+                    <span id="empAvatarDefault"><i class="fa-solid fa-user"></i></span>
+                    <img id="empAvatarImg" src="" style="display: none;" alt="Profile">
+                </div>
+                <div>
+                    <h3 style="color: #f8fafc; font-size: 16px;" id="empName">Staff Member</h3>
+                    <p style="margin-top: 3px; color: #38bdf8; font-size: 12.5px; font-weight: 600;">
+                        ID: <span id="empCode"></span> • <span id="empRoleText"></span>
+                    </p>
+                    <p style="margin-top: 3px; font-size: 12px; color: var(--text-muted);">
+                        <i class="fa-solid fa-phone"></i> <span id="empPhoneText">-</span> • <i class="fa-solid fa-envelope"></i> <span id="empEmailText">-</span>
+                    </p>
+                    <p style="margin-top: 2px; font-size: 12px; color: var(--text-muted);">
+                        <i class="fa-solid fa-location-dot"></i> <span id="empAddressText">-</span> • Session: <span id="empLoginTime" style="color: #34d399; font-weight: 600;"></span>
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="tabs">
+            <button class="tab-btn active" id="tabMainBtn" onclick="switchEmpTab('empMainTab', this)"><i class="fa-solid fa-table-columns"></i> Work Console</button>
+            <button class="tab-btn" onclick="switchEmpTab('empProfileTab', this)"><i class="fa-solid fa-user-gear"></i> Account Settings</button>
+            <button class="tab-btn" onclick="switchEmpTab('empLeaveTab', this)"><i class="fa-solid fa-calendar-days"></i> Leave Requests</button>
+        </div>
+
+        <!-- EMP TAB 1: WORK DASHBOARD -->
+        <div id="empMainTab" class="tab-content active">
+            <!-- Developer Projects -->
+            <div id="developerSection" class="info-card" style="display:none; border-left-color: var(--success);">
+                <h3 style="font-size: 14px; margin-bottom: 12px; color: var(--success);"><i class="fa-solid fa-code"></i> My Assigned Production Tasks</h3>
+                <div id="employeeProjectsList" style="max-height: 280px; overflow-y: auto; font-size: 13px;">
+                    <p>No projects assigned currently.</p>
+                </div>
+            </div>
+
+            <!-- Marketing Leads -->
+            <div id="marketingSection" style="display:none; background: rgba(10, 15, 26, 0.5); padding: 18px; border-radius: 12px; margin-bottom: 18px; border: 1px solid var(--border-color);">
+                <h3 style="font-size: 14px; margin-bottom: 12px; color: #38bdf8;"><i class="fa-solid fa-user-plus"></i> New Client Onboarding & Payment</h3>
+                <div class="grid-2">
+                    <div class="form-group">
+                        <label>Client Full Name</label>
+                        <input type="text" id="clientName" placeholder="Client Name">
+                    </div>
+                    <div class="form-group">
+                        <label>Primary Phone Number (Unique)</label>
+                        <input type="tel" id="clientPhone" placeholder="10-digit mobile number" maxlength="10">
+                    </div>
+                </div>
+                <div class="grid-2">
+                    <div class="form-group">
+                        <label>Total Contract Value (₹)</label>
+                        <input type="number" id="clientTotal" placeholder="e.g. 25000">
+                    </div>
+                    <div class="form-group">
+                        <label>Initial Token / Advance Paid (₹)</label>
+                        <input type="number" id="clientAdvance" placeholder="e.g. 10000">
+                    </div>
+                </div>
+                <button class="btn" style="background: var(--warning); color: #000;" onclick="submitLead()">
+                    <i class="fa-solid fa-file-invoice-dollar"></i> Save Client & Record Advance
+                </button>
+                <div class="success-msg" id="leadMsg"></div>
+
+                <div style="display: flex; justify-content: space-between; align-items: center; margin: 18px 0 8px 0;">
+                    <h3 style="font-size: 13.5px; color: #f8fafc;"><i class="fa-solid fa-folder-open"></i> My Submitted Client Accounts</h3>
+                    <input type="text" id="marketingSearchClient" placeholder="🔍 Search clients..." onkeyup="filterMarketingClients()" style="width: 220px; padding: 6px 10px; font-size: 12px;">
+                </div>
+                <div style="max-height: 200px; overflow-y: auto; background: rgba(10, 15, 26, 0.7); padding: 12px; border-radius: 10px;" id="marketingClientsList">
+                    <p style="font-size: 12px; color: var(--text-muted);">No client accounts registered yet.</p>
+                </div>
+            </div>
+
+            <!-- Customer Support (Calls) Section -->
+            <div id="supportSection" style="display:none; background: rgba(10, 15, 26, 0.5); padding: 18px; border-radius: 12px; margin-bottom: 18px; border: 1px solid var(--border-color);">
+                <h3 style="font-size: 14px; margin-bottom: 12px; color: #a855f7;"><i class="fa-solid fa-headset"></i> Customer Call & Ticket Logger</h3>
+                <div class="grid-2">
+                    <div class="form-group">
+                        <label>Caller / Client Name</label>
+                        <input type="text" id="callerName" placeholder="e.g. Srinivas Rao">
+                    </div>
+                    <div class="form-group">
+                        <label>Caller Phone Number</label>
+                        <input type="tel" id="callerPhone" placeholder="10-digit mobile number" maxlength="10">
+                    </div>
+                </div>
+                <div class="grid-2">
+                    <div class="form-group">
+                        <label>Call Category / Type</label>
+                        <select id="callCategory">
+                            <option value="New Service Enquiry">New Service Enquiry</option>
+                            <option value="Technical Support / Bug">Technical Support / Bug</option>
+                            <option value="Payment / Billing Query">Payment / Billing Query</option>
+                            <option value="General Follow-up">General Follow-up</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Ticket Resolution Status</label>
+                        <select id="callStatus">
+                            <option value="Open">Open (Needs Action)</option>
+                            <option value="In Progress">In Progress</option>
+                            <option value="Resolved">Resolved / Closed</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Call Summary & Issue Notes</label>
+                    <textarea id="callNotes" rows="2" placeholder="Describe customer query, requirements, or issue details..."></textarea>
+                </div>
+                <button class="btn" style="background: #8b5cf6;" onclick="submitSupportCall()">
+                    <i class="fa-solid fa-phone-volume"></i> Log Customer Call
+                </button>
+                <div class="success-msg" id="callLogMsg"></div>
+
+                <div style="display: flex; justify-content: space-between; align-items: center; margin: 18px 0 8px 0;">
+                    <h3 style="font-size: 13.5px; color: #f8fafc;"><i class="fa-solid fa-clock-rotate-left"></i> My Logged Customer Calls</h3>
+                    <input type="text" id="supportSearchCall" placeholder="🔍 Search calls..." onkeyup="filterSupportCalls()" style="width: 220px; padding: 6px 10px; font-size: 12px;">
+                </div>
+                <div style="max-height: 240px; overflow-y: auto; background: rgba(10, 15, 26, 0.7); padding: 12px; border-radius: 10px;" id="supportCallsList">
+                    <p style="font-size: 12px; color: var(--text-muted);">No customer calls logged yet.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- EMP TAB 2: PROFILE SETTINGS -->
+        <div id="empProfileTab" class="tab-content">
+            <div style="background: rgba(10, 15, 26, 0.5); padding: 18px; border-radius: 12px; margin-bottom: 18px; border: 1px solid var(--border-color);">
+                <h3 style="font-size: 14px; margin-bottom: 12px; color: #f8fafc;"><i class="fa-solid fa-user-pen"></i> Edit Personal Profile</h3>
+                <div class="form-group">
+                    <label>Profile Picture Upload</label>
+                    <input type="file" id="profilePhotoInput" accept="image/*" onchange="previewAndSaveProfilePhoto(event)">
+                    <small style="color: var(--text-muted); font-size: 11px;">Images are automatically optimized to save storage space.</small>
+                </div>
+                <div class="form-group">
+                    <label>Full Name</label>
+                    <input type="text" id="editEmpNameInput">
+                </div>
+                <div class="grid-2">
+                    <div class="form-group">
+                        <label>Phone Number <span style="color:#f87171; font-size:11px;">(Admin Locked)</span></label>
+                        <input type="text" id="editEmpPhoneInput" disabled>
+                    </div>
+                    <div class="form-group">
+                        <label>Official Email <span style="color:#f87171; font-size:11px;">(Admin Locked)</span></label>
+                        <input type="text" id="editEmpEmailInput" disabled>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Security Passcode</label>
+                    <input type="text" value="••••••••••••" disabled style="color: var(--warning); font-weight: bold;">
+                </div>
+                <button class="btn" onclick="saveEmployeeProfileUpdates()"><i class="fa-solid fa-floppy-disk"></i> Save Profile Details</button>
+                <div class="success-msg" id="profileUpdateMsg"></div>
+            </div>
+        </div>
+
+        <!-- EMP TAB 3: LEAVE APPLICATION -->
+        <div id="empLeaveTab" class="tab-content">
+            <div style="background: rgba(10, 15, 26, 0.5); padding: 18px; border-radius: 12px; margin-bottom: 18px; border: 1px solid var(--border-color);">
+                <h3 style="font-size: 14px; margin-bottom: 12px; color: #f8fafc;"><i class="fa-solid fa-envelope-open-text"></i> Apply for Official Leave</h3>
+                <div class="grid-2">
+                    <div class="form-group">
+                        <label>Leave Date</label>
+                        <input type="date" id="leaveDateInput">
+                    </div>
+                    <div class="form-group">
+                        <label>Reason for Absence</label>
+                        <input type="text" id="leaveReasonInput" placeholder="Medical, Personal Emergency, etc.">
+                    </div>
+                </div>
+                <button class="btn" style="background: #8b5cf6;" onclick="submitLeaveRequest()"><i class="fa-solid fa-paper-plane"></i> Submit Leave Request</button>
+                <div class="success-msg" id="leaveMsg"></div>
+            </div>
+
+            <h3 style="font-size: 14px; color: #f8fafc; margin-bottom: 8px;"><i class="fa-solid fa-clock-rotate-left"></i> Leave History</h3>
+            <div id="myLeaveList" style="font-size: 12.5px; color: var(--text-muted);">No leave applications logged.</div>
+        </div>
+
+        <button class="btn logout-btn" onclick="handleLogout()"><i class="fa-solid fa-power-off"></i> Secure Logout</button>
+    </div>
+
+    <!-- 4. Invoice Receipt Modal -->
+    <div class="modal" id="invoiceModal">
+        <div class="modal-content">
+            <div style="border-bottom: 2px solid #3b82f6; padding-bottom: 10px; margin-bottom: 15px; display: flex; justify-content: space-between; align-items: flex-end;">
+                <div>
+                    <h2 style="color: #38bdf8; text-align: left; font-size: 18px;">TAX INVOICE & RECEIPT</h2>
+                    <p style="font-size: 11px; color: #94a3b8;">Tekkali Digital & Web Solutions Hub</p>
+                </div>
+                <div style="text-align: right; font-size: 11px; color: #94a3b8;">
+                    Tekkali, Srikakulam, AP
+                </div>
+            </div>
+            
+            <div id="invoiceDetails"></div>
+            
+            <div class="no-print" style="margin-top: 20px; display: flex; gap: 10px;">
+                <button class="btn" style="background: var(--success); flex: 1;" onclick="window.print()"><i class="fa-solid fa-print"></i> Print / Save PDF</button>
+                <button class="btn" style="background: #475569; width: 110px;" onclick="document.getElementById('invoiceModal').style.display='none'">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // సర్వర్ బేస్ URL (లోకల్ రన్ చేసేటప్పుడు localhost:5000, రెండర్ లో లైవ్ URL ఇస్తాం)
+        const API_BASE = "http://localhost:5000/api";
+
+        // క్లౌడ్ నుండి యూజర్స్ డేటాను తెచ్చుకోవడం
+        async function getUsersDB() {
+            try {
+                const response = await fetch(`${API_BASE}/users`);
+                const data = await response.json();
+                if (data && Object.keys(data).length > 0) return data;
+            } catch (e) {
+                console.error("Cloud fetch error, falling back to default");
+            }
+
+            // ఒకవేళ డేటాబేస్ ఖాళీగా ఉంటే డిఫాల్ట్ అకౌంట్స్
+            return {
+                "ADMIN": { name: "Administrator", pass: "Admin@123", role: "admin", phone: "9876543210", email: "admin@tekkali.hub", address: "Admin Block, Tekkali" },
+                "TEK101": { name: "Sivaji Yanda", pass: "Tek@2026_x7Q!", role: "developer", phone: "9490000000", email: "sivaji@tekkali.hub", address: "Tollusurupalli, Tekkali" },
+                "MKT201": { name: "Marketing Executive", pass: "Mkt@2026_x9W!", role: "marketing", phone: "9491111111", email: "marketing@tekkali.hub", address: "Main Bazaar, Tekkali" },
+                "SUP301": { name: "Customer Support Agent", pass: "Sup@2026_x5K!", role: "support", phone: "9492222222", email: "support@tekkali.hub", address: "College Road, Tekkali" }
+            };
+        }
+
+        async function saveUserToCloud(userId, userData) {
+            try {
+                await fetch(`${API_BASE}/users`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ userId, data: userData })
+                });
+            } catch (err) {
+                console.error("Error saving user to cloud:", err);
+            }
+        }
+
+        let attendanceTimerInterval = null;
+
+        function switchAdminTab(tabId, btn) {
+            document.querySelectorAll('#adminPanel .tab-content').forEach(el => el.classList.remove('active'));
+            document.querySelectorAll('#adminPanel .tab-btn').forEach(el => el.classList.remove('active'));
+            document.getElementById(tabId).classList.add('active');
+            btn.classList.add('active');
+
+            if (tabId === 'overviewTab') updateAdminDashboardStats();
+            else if (tabId === 'staffTab') loadStaffTable();
+            else if (tabId === 'tasksTab') loadAdminProjectsTable();
+            else if (tabId === 'financeTab') loadLeadsTable();
+            else if (tabId === 'supportLogsTab') loadAdminSupportLogs();
+            else if (tabId === 'attendanceTab') loadAdminAttendanceReport();
+            else if (tabId === 'leavesTab') loadAdminLeavesTable();
+        }
+
+        function switchEmpTab(tabId, btn) {
+            document.querySelectorAll('#employeePanel .tab-content').forEach(el => el.classList.remove('active'));
+            document.querySelectorAll('#employeePanel .tab-btn').forEach(el => el.classList.remove('active'));
+            document.getElementById(tabId).classList.add('active');
+            btn.classList.add('active');
+        }
+
+        async function handleLogin() {
+            const id = document.getElementById('loginId').value.trim().toUpperCase();
+            const pass = document.getElementById('loginPass').value.trim();
+            const errorDiv = document.getElementById('loginError');
+            const usersData = await getUsersDB();
+
+            errorDiv.textContent = "";
+
+            if (usersData[id] && usersData[id].pass === pass) {
+                document.getElementById('loginPanel').style.display = 'none';
+                localStorage.setItem("active_login_session", JSON.stringify({ 
+                    id: id, 
+                    time: new Date().toLocaleTimeString() + " (" + new Date().toLocaleDateString() + ")" 
+                }));
+
+                if (usersData[id].role === "admin") {
+                    document.getElementById('adminPanel').style.display = 'block';
+                    updateAdminDashboardStats();
+                    loadAdminDropdown();
+                    loadStaffTable();
+                    loadAdminProjectsTable();
+                    loadLeadsTable();
+                    loadAdminSupportLogs();
+                    loadAdminAttendanceReport();
+                    loadAdminLeavesTable();
+                } else {
+                    document.getElementById('employeePanel').style.display = 'block';
+                    loadEmployeeProfileUI(id, usersData[id]);
+                    checkActiveAttendanceSession(id);
+                    checkSystemNotice();
+                    loadMyLeaves(id);
+
+                    document.getElementById('marketingSection').style.display = 'none';
+                    document.getElementById('developerSection').style.display = 'none';
+                    document.getElementById('supportSection').style.display = 'none';
+
+                    if (usersData[id].role === "marketing") {
+                        document.getElementById('marketingSection').style.display = 'block';
+                        loadMarketingClients(id);
+                    } else if (usersData[id].role === "developer") {
+                        document.getElementById('developerSection').style.display = 'block';
+                        loadEmployeeProjects(id);
+                    } else if (usersData[id].role === "support") {
+                        document.getElementById('supportSection').style.display = 'block';
+                        loadSupportCalls(id);
+                    }
+                }
+            } else {
+                errorDiv.textContent = "Invalid Employee ID or Passcode! Please verify credentials.";
+            }
+        }
+
+        function loadEmployeeProfileUI(id, userData) {
+            document.getElementById('empName').textContent = userData.name;
+            document.getElementById('empCode').textContent = id;
+            
+            let roleDisplay = userData.role.toUpperCase();
+            if (userData.role === "support") roleDisplay = "CUSTOMER SUPPORT (CALLS)";
+            document.getElementById('empRoleText').textContent = roleDisplay;
+
+            document.getElementById('empPhoneText').textContent = userData.phone || "Not Provided";
+            document.getElementById('empEmailText').textContent = userData.email || "Not Provided";
+            document.getElementById('empAddressText').textContent = userData.address || "Not Provided";
+            document.getElementById('empLoginTime').textContent = new Date().toLocaleTimeString();
+
+            document.getElementById('editEmpNameInput').value = userData.name;
+            document.getElementById('editEmpPhoneInput').value = userData.phone || "";
+            document.getElementById('editEmpEmailInput').value = userData.email || "";
+
+            const imgElem = document.getElementById('empAvatarImg');
+            const defaultIcon = document.getElementById('empAvatarDefault');
+
+            if (userData.photo) {
+                imgElem.src = userData.photo;
+                imgElem.style.display = "block";
+                defaultIcon.style.display = "none";
+            } else {
+                imgElem.style.display = "none";
+                defaultIcon.style.display = "block";
+            }
+        }
+
+        function previewAndSaveProfilePhoto(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = async function(e) {
+                const img = new Image();
+                img.onload = async function() {
+                    const canvas = document.createElement('canvas');
+                    const maxDim = 120;
+                    let width = img.width;
+                    let height = img.height;
+
+                    if (width > height) {
+                        if (width > maxDim) {
+                            height *= maxDim / width;
+                            width = maxDim;
+                        }
+                    } else {
+                        if (height > maxDim) {
+                            width *= maxDim / height;
+                            height = maxDim;
+                        }
+                    }
+
+                    canvas.width = width;
+                    canvas.height = height;
+                    const ctx = canvas.getContext('2d');
+                    ctx.drawImage(img, 0, 0, width, height);
+                    const compressedBase64 = canvas.toDataURL('image/jpeg', 0.85);
+
+                    const session = JSON.parse(localStorage.getItem("active_login_session") || "{}");
+                    const id = session.id;
+                    const usersData = await getUsersDB();
+
+                    if (usersData[id]) {
+                        usersData[id].photo = compressedBase64;
+                        await saveUserToCloud(id, usersData[id]);
+                        loadEmployeeProfileUI(id, usersData[id]);
+                        const msgDiv = document.getElementById('profileUpdateMsg');
+                        msgDiv.style.color = "#34d399";
+                        msgDiv.textContent = "Profile picture updated successfully!";
+                    }
+                };
+                img.src = e.target.result;
+            };
+            reader.readAsDataURL(file);
+        }
+
+        async function saveEmployeeProfileUpdates() {
+            const session = JSON.parse(localStorage.getItem("active_login_session") || "{}");
+            const id = session.id;
+            const usersData = await getUsersDB();
+            const msgDiv = document.getElementById('profileUpdateMsg');
+            const newName = document.getElementById('editEmpNameInput').value.trim();
+
+            if (!newName) {
+                msgDiv.style.color = "#f87171";
+                msgDiv.textContent = "Name cannot be left blank!";
+                return;
+            }
+
+            usersData[id].name = newName;
+            await saveUserToCloud(id, usersData[id]);
+            loadEmployeeProfileUI(id, usersData[id]);
+
+            msgDiv.style.color = "#34d399";
+            msgDiv.textContent = "Profile info saved successfully!";
+        }
+
+        async function updateAdminDashboardStats() {
+            const usersData = await getUsersDB();
+            let count = 0;
+            for (let id in usersData) {
+                if (usersData[id].role !== "admin") count++;
+            }
+            document.getElementById('statTotalStaff').textContent = count;
+
+            try {
+                const res = await fetch(`${API_BASE}/leads`);
+                const leads = await res.json();
+                const totalRev = leads.reduce((acc, l) => acc + (parseFloat(l.adv) || 0), 0);
+                const totalPend = leads.reduce((acc, l) => acc + (parseFloat(l.pend) || 0), 0);
+
+                document.getElementById('statTotalRev').textContent = '₹' + totalRev.toLocaleString('en-IN');
+                document.getElementById('statTotalPend').textContent = '₹' + totalPend.toLocaleString('en-IN');
+            } catch(err) {
+                console.error("Error updating stats", err);
+            }
+        }
+
+        async function createEmployee() {
+            const name = document.getElementById('newEmpName').value.trim();
+            const role = document.getElementById('newEmpRole').value;
+            const phone = document.getElementById('newEmpPhone').value.trim();
+            const email = document.getElementById('newEmpEmail').value.trim();
+            const address = document.getElementById('newEmpAddress').value.trim();
+            const pass = document.getElementById('newEmpPass').value.trim();
+            const msgDiv = document.getElementById('empCreateMsg');
+
+            if (name && pass) {
+                const usersData = await getUsersDB();
+                let prefix = "EMP";
+                if (role === "developer") prefix = "TEK";
+                else if (role === "marketing") prefix = "MKT";
+                else if (role === "support") prefix = "SUP";
+
+                let randomNum = Math.floor(100 + Math.random() * 900);
+                let newId = prefix + randomNum;
+
+                while (usersData[newId]) {
+                    randomNum = Math.floor(100 + Math.random() * 900);
+                    newId = prefix + randomNum;
+                }
+
+                usersData[newId] = { name, pass, role, phone, email, address };
+                await saveUserToCloud(newId, usersData[newId]);
+
+                msgDiv.style.color = "#34d399";
+                msgDiv.textContent = `Staff Created: ID ${newId} | Initial Pass: ${pass}`;
+                document.getElementById('newEmpName').value = '';
+                document.getElementById('newEmpPhone').value = '';
+                document.getElementById('newEmpEmail').value = '';
+                document.getElementById('newEmpAddress').value = '';
+                document.getElementById('newEmpPass').value = '';
+                
+                updateAdminDashboardStats();
+                loadAdminDropdown();
+                loadStaffTable();
+            } else {
+                msgDiv.style.color = "#f87171";
+                msgDiv.textContent = "Please fill in both Name and Passcode!";
+            }
+        }
+
+        async function loadStaffTable() {
+            const usersData = await getUsersDB();
+            const tbody = document.getElementById('staffTableBody');
+            let html = "";
+
+            for (let id in usersData) {
+                if (usersData[id].role !== "admin") {
+                    let roleLabel = usersData[id].role.toUpperCase();
+                    if (usersData[id].role === "support") roleLabel = "SUPPORT (CALLS)";
+
+                    html += `<tr>
+                        <td><strong>${id}</strong><br><small style="color:#94a3b8;">${usersData[id].name}</small></td>
+                        <td><span class="badge badge-progress">${roleLabel}</span></td>
+                        <td>${usersData[id].phone || '-'}<br><small style="color:#94a3b8">${usersData[id].email || '-'}</small></td>
+                        <td><input type="text" value="${usersData[id].pass}" id="pass_${id}" style="padding: 4px 8px; font-size: 11.5px; width: 110px;"></td>
+                        <td>
+                            <button class="action-btn btn-add" onclick="updateStaffPass('${id}')"><i class="fa-solid fa-floppy-disk"></i> Save</button>
+                            <button class="action-btn btn-delete" onclick="deleteStaff('${id}')"><i class="fa-solid fa-trash"></i> Revoke</button>
+                        </td>
+                    </tr>`;
+                }
+            }
+            tbody.innerHTML = html || `<tr><td colspan="5" style="text-align:center;">No staff accounts configured.</td></tr>`;
+        }
+
+        async function updateStaffPass(id) {
+            const passInput = document.getElementById('pass_' + id);
+            if (!passInput) return;
+            const newPass = passInput.value.trim();
+            if (!newPass) return alert("Passcode cannot be empty!");
+            const usersData = await getUsersDB();
+            if (usersData[id]) {
+                usersData[id].pass = newPass;
+                await saveUserToCloud(id, usersData[id]);
+                alert(`Passcode updated for ${id}`);
+            }
+        }
+
+        async function deleteStaff(id) {
+            if (confirm(`Are you sure you want to revoke account ${id}?`)) {
+                const usersData = await getUsersDB();
+                delete usersData[id];
+                // To completely remove or update user in cloud, you can call an API or update
+                await saveUserToCloud(id, null); 
+                loadStaffTable();
+                updateAdminDashboardStats();
+                loadAdminDropdown();
+            }
+        }
+
+        /* =========================================================
+           CUSTOMER SUPPORT EXECUTIVE (CALLS) MODULE
+           ========================================================= */
+        async function submitSupportCall() {
+            const callerName = document.getElementById('callerName').value.trim();
+            const callerPhone = document.getElementById('callerPhone').value.trim();
+            const category = document.getElementById('callCategory').value;
+            const status = document.getElementById('callStatus').value;
+            const notes = document.getElementById('callNotes').value.trim();
+            const currentEmp = document.getElementById('empCode').textContent;
+            const msgDiv = document.getElementById('callLogMsg');
+
+            if (!callerName || !callerPhone || !notes) {
+                msgDiv.style.color = "#f87171";
+                msgDiv.textContent = "Please fill in caller name, phone number, and call notes!";
+                return;
+            }
+
+            const newCall = {
+                id: 'CALL_' + Date.now(),
+                callerName,
+                callerPhone,
+                category,
+                status,
+                notes,
+                agentId: currentEmp,
+                timestamp: new Date().toLocaleString('en-IN')
+            };
+
+            try {
+                await fetch(`${API_BASE}/support-calls`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(newCall)
+                });
+
+                msgDiv.style.color = "#34d399";
+                msgDiv.textContent = "Customer call logged successfully to Cloud DB!";
+
+                document.getElementById('callerName').value = '';
+                document.getElementById('callerPhone').value = '';
+                document.getElementById('callNotes').value = '';
+
+                loadSupportCalls(currentEmp);
+            } catch(err) {
+                msgDiv.style.color = "#f87171";
+                msgDiv.textContent = "Error saving call log!";
+            }
+        }
+
+        async function loadSupportCalls(empId) {
+            try {
+                const res = await fetch(`${API_BASE}/support-calls`);
+                const allCalls = await res.json();
+                const myCalls = allCalls.filter(c => c.agentId === empId);
+                window.currentEmpCallsCache = myCalls;
+                renderSupportCallsList(myCalls);
+            } catch(e) {
+                console.error("Error loading calls", e);
+            }
+        }
+
+        function renderSupportCallsList(calls) {
+            const container = document.getElementById('supportCallsList');
+            if (calls.length === 0) {
+                container.innerHTML = "<p style='font-size: 12px; color: var(--text-muted);'>No customer calls logged yet.</p>";
+                return;
+            }
+
+            let html = "";
+            calls.forEach(c => {
+                html += `<div style="font-size: 12px; border-bottom: 1px solid rgba(255,255,255,0.08); padding-bottom: 10px; margin-bottom: 10px;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
+                        <div>
+                            <strong>${c.callerName}</strong> (${c.callerPhone}) 
+                            <span class="badge badge-progress" style="margin-left: 6px;">${c.category}</span>
+                        </div>
+                        <select onchange="updateSupportCallStatus('${c.id}', this.value)" style="padding: 3px 6px; font-size: 11px; width: auto;">
+                            <option value="Open" ${c.status === 'Open' ? 'selected' : ''}>Open</option>
+                            <option value="In Progress" ${c.status === 'In Progress' ? 'selected' : ''}>In Progress</option>
+                            <option value="Resolved" ${c.status === 'Resolved' ? 'selected' : ''}>Resolved</option>
+                        </select>
+                    </div>
+                    <p style="color: #cbd5e1; margin: 4px 0;">${c.notes}</p>
+                    <small style="color: var(--text-muted); font-size: 10.5px;"><i class="fa-regular fa-clock"></i> ${c.timestamp}</small>
+                </div>`;
+            });
+            container.innerHTML = html;
+        }
+
+        function filterSupportCalls() {
+            const query = (document.getElementById('supportSearchCall').value || '').toLowerCase();
+            const calls = window.currentEmpCallsCache || [];
+            const filtered = calls.filter(c => 
+                (c.callerName || '').toLowerCase().includes(query) || 
+                (c.callerPhone || '').includes(query) ||
+                (c.category || '').toLowerCase().includes(query)
+            );
+            renderSupportCallsList(filtered);
+        }
+
+        async function updateSupportCallStatus(callId, newStatus) {
+            // Updating status locally or via API if needed
+            const allCalls = window.adminSupportCache || [];
+            const target = allCalls.find(c => c.id === callId);
+            if (target) {
+                target.status = newStatus;
+                // Add API endpoint call if needed
+            }
+        }
+
+        async function loadAdminSupportLogs() {
+            try {
+                const res = await fetch(`${API_BASE}/support-calls`);
+                const allCalls = await res.json();
+                window.adminSupportCache = allCalls;
+                renderAdminSupportTable(allCalls);
+            } catch(e) {
+                console.error("Error loading admin support logs", e);
+            }
+        }
+
+        function renderAdminSupportTable(calls) {
+            const tbody = document.getElementById('adminSupportTableBody');
+            
+            if (calls.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="5" style="text-align:center;">No customer support call logs found.</td></tr>`;
+                return;
+            }
+
+            let html = "";
+            calls.forEach(c => {
+                const badgeClass = c.status === 'Resolved' ? 'badge-success' : (c.status === 'Open' ? 'badge-danger' : 'badge-pending');
+
+                html += `<tr>
+                    <td><strong>${c.callerName}</strong><br><small style="color:#94a3b8;">Ph: ${c.callerPhone}</small></td>
+                    <td><span class="badge badge-progress">${c.category}</span><br><small style="color:#94a3b8; font-size:10px;">${c.timestamp}</small></td>
+                    <td style="max-width: 260px;">${c.notes}</td>
+                    <td><strong>${c.agentId}</strong></td>
+                    <td>
+                        <span class="badge ${badgeClass}" style="margin-bottom: 5px;">${c.status}</span><br>
+                    </td>
+                </tr>`;
+            });
+            tbody.innerHTML = html;
+        }
+
+        function filterAdminSupportLogs() {
+            const query = (document.getElementById('adminSearchSupport').value || '').toLowerCase();
+            const calls = window.adminSupportCache || [];
+            const filtered = calls.filter(c => 
+                (c.callerName || '').toLowerCase().includes(query) || 
+                (c.callerPhone || '').includes(query) || 
+                (c.agentId || '').toLowerCase().includes(query)
+            );
+            renderAdminSupportTable(filtered);
+        }
+
+        /* =========================================================
+           ATTENDANCE, LEAVES, PROJECTS & FINANCE MODULES
+           ========================================================= */
+        function triggerAttendanceAlert() {
+            const durationMinutes = parseInt(document.getElementById('attendanceDuration').value) || 2;
+            const expireTime = Date.now() + (durationMinutes * 60 * 1000);
+
+            const attendanceSession = {
+                active: true,
+                expireTime: expireTime,
+                records: {}
+            };
+
+            localStorage.setItem("hub_attendance_session", JSON.stringify(attendanceSession));
+            
+            const msgDiv = document.getElementById('attendanceBroadcastMsg');
+            msgDiv.style.color = "#34d399";
+            msgDiv.textContent = `Surprise attendance broadcasted for ${durationMinutes} minutes!`;
+            loadAdminAttendanceReport();
+        }
+
+        function checkActiveAttendanceSession(empId) {
+            const sessionData = localStorage.getItem("hub_attendance_session");
+            if (!sessionData) return;
+
+            const session = JSON.parse(sessionData);
+            if (!session.active) return;
+
+            const timeLeft = session.expireTime - Date.now();
+            if (timeLeft <= 0) {
+                session.active = false;
+                localStorage.setItem("hub_attendance_session", JSON.stringify(session));
+                return;
+            }
+
+            const banner = document.getElementById('attendanceAlertBanner');
+            banner.style.display = 'block';
+
+            if (attendanceTimerInterval) clearInterval(attendanceTimerInterval);
+
+            attendanceTimerInterval = setInterval(function() {
+                const remaining = session.expireTime - Date.now();
+                if (remaining <= 0) {
+                    clearInterval(attendanceTimerInterval);
+                    banner.style.display = 'none';
+                    return;
+                }
+                const mins = Math.floor((remaining % (1000 * 60 * 60)) / (1000 * 60));
+                const secs = Math.floor((remaining % (1000 * 60)) / 1000);
+                document.getElementById('attendanceTimer').textContent = 
+                    (mins < 10 ? "0" + mins : mins) + ":" + (secs < 10 ? "0" + secs : secs);
+            }, 1000);
+
+            if (session.records && session.records[empId]) {
+                document.getElementById('attendanceResultMsg').style.color = "#34d399";
+                document.getElementById('attendanceResultMsg').textContent = "✓ Present (Attendance successfully recorded)";
+            }
+        }
+
+        async function markAttendanceNow() {
+            const sessionData = localStorage.getItem("hub_attendance_session");
+            if (!sessionData) return;
+            const session = JSON.parse(sessionData);
+
+            if (Date.now() > session.expireTime) {
+                alert("Attendance window expired!");
+                document.getElementById('attendanceAlertBanner').style.display = 'none';
+                return;
+            }
+
+            const sessionLogin = JSON.parse(localStorage.getItem("active_login_session") || "{}");
+            const empId = sessionLogin.id;
+            const usersData = await getUsersDB();
+
+            if (!session.records) session.records = {};
+            session.records[empId] = {
+                name: usersData[empId] ? usersData[empId].name : empId,
+                status: "Present",
+                time: new Date().toLocaleTimeString()
+            };
+
+            localStorage.setItem("hub_attendance_session", JSON.stringify(session));
+
+            document.getElementById('attendanceResultMsg').style.color = "#34d399";
+            document.getElementById('attendanceResultMsg').textContent = "✓ Present (Attendance successfully recorded)";
+            alert("Attendance logged successfully!");
+        }
+
+        async function loadAdminAttendanceReport() {
+            const tbody = document.getElementById('adminAttendanceTableBody');
+            const sessionData = localStorage.getItem("hub_attendance_session");
+            const usersData = await getUsersDB();
+
+            if (!sessionData) {
+                tbody.innerHTML = `<tr><td colspan="3" style="text-align:center;">No active attendance sessions.</td></tr>`;
+                return;
+            }
+
+            const session = JSON.parse(sessionData);
+            let html = "";
+            const records = session.records || {};
+
+            for (let id in usersData) {
+                if (usersData[id].role === "admin") continue;
+                const record = records[id];
+                const statusBadge = record ? 
+                    `<span style="color: #34d399; font-weight: bold;"><i class="fa-solid fa-circle-check"></i> Present</span>` : 
+                    `<span style="color: #f87171; font-weight: bold;"><i class="fa-solid fa-circle-xmark"></i> Absent / Pending</span>`;
+                const timeText = record ? record.time : "-";
+
+                html += `<tr>
+                    <td><strong>${id}</strong> - ${usersData[id].name}</td>
+                    <td>${statusBadge}</td>
+                    <td>${timeText}</td>
+                </tr>`;
+            }
+            tbody.innerHTML = html;
+        }
+
+        async function loadAdminLeavesTable() {
+            const tbody = document.getElementById('adminLeavesTableBody');
+            const usersData = await getUsersDB();
+            let html = "";
+
+            for (let id in usersData) {
+                if (usersData[id].role === "admin") continue;
+                const leaves = JSON.parse(localStorage.getItem("leaves_" + id) || "[]");
+                leaves.forEach((l, index) => {
+                    const badgeClass = l.status === 'Approved' ? 'badge-success' : l.status === 'Rejected' ? 'badge-danger' : 'badge-progress';
+                    html += `<tr>
+                        <td><strong>${id}</strong><br><small style="color:#94a3b8;">${usersData[id].name}</small></td>
+                        <td>${l.date}</td>
+                        <td>${l.reason}</td>
+                        <td>
+                            <span class="badge ${badgeClass}">${l.status}</span>
+                            <div style="margin-top: 6px; display: flex; gap: 4px;">
+                                <button class="action-btn btn-add" onclick="updateLeaveStatus('${id}', ${index}, 'Approved')">Approve</button>
+                                <button class="action-btn btn-delete" onclick="updateLeaveStatus('${id}', ${index}, 'Rejected')">Reject</button>
+                            </div>
+                        </td>
+                    </tr>`;
+                });
+            }
+
+            tbody.innerHTML = html || `<tr><td colspan="4" style="text-align:center;">No leave applications found.</td></tr>`;
+        }
+
+        function updateLeaveStatus(empId, index, status) {
+            const key = "leaves_" + empId;
+            let leaves = JSON.parse(localStorage.getItem(key) || "[]");
+            if (leaves[index]) {
+                leaves[index].status = status;
+                localStorage.setItem(key, JSON.stringify(leaves));
+                loadAdminLeavesTable();
+            }
+        }
+
+        async function loadAdminDropdown() {
+            const usersData = await getUsersDB();
+            const select = document.getElementById('targetEmpSelect');
+            let html = "";
+
+            for (let id in usersData) {
+                if (usersData[id].role === "developer") {
+                    html += `<option value="${id}">${id} - ${usersData[id].name} (DEVELOPER)</option>`;
+                }
+            }
+            select.innerHTML = html || "<option value=''>No developers available</option>";
+        }
+
+        function assignProject() {
+            const targetId = document.getElementById('targetEmpSelect').value;
+            const title = document.getElementById('projectTitle').value.trim();
+            const priority = document.getElementById('projectPriority').value;
+            const deadline = document.getElementById('projectDeadline').value;
+            const desc = document.getElementById('projectDesc').value.trim();
+            const msgDiv = document.getElementById('adminMsg');
+
+            msgDiv.textContent = "";
+
+            if (title && targetId) {
+                const projectsKey = "projects_" + targetId;
+                const existingProjects = JSON.parse(localStorage.getItem(projectsKey) || "[]");
+                
+                existingProjects.push({ 
+                    id: 'PROJ_' + Date.now(), 
+                    title: title, 
+                    stage: 'Not Started',
+                    priority: priority,
+                    deadline: deadline,
+                    desc: desc, 
+                    date: new Date().toLocaleDateString() 
+                });
+                localStorage.setItem(projectsKey, JSON.stringify(existingProjects));
+
+                msgDiv.style.color = "#34d399";
+                msgDiv.textContent = "Project assigned successfully!";
+                document.getElementById('projectTitle').value = '';
+                document.getElementById('projectDesc').value = '';
+                loadAdminProjectsTable();
+            } else {
+                msgDiv.style.color = "#f87171";
+                msgDiv.textContent = "Please select a developer and enter a project title!";
+            }
+        }
+
+        async function loadAdminProjectsTable() {
+            const tbody = document.getElementById('adminProjectsTableBody');
+            let html = "";
+            const usersData = await getUsersDB();
+
+            Object.keys(localStorage).forEach(key => {
+                if (key.startsWith("projects_")) {
+                    const empId = key.replace("projects_", "");
+                    const projects = JSON.parse(localStorage.getItem(key) || "[]");
+                    
+                    projects.forEach((p) => {
+                        html += `<tr>
+                            <td><strong>${empId}</strong><br><small style="color:#94a3b8;">${usersData[empId] ? usersData[empId].name : ''}</small></td>
+                            <td>${p.title}</td>
+                            <td>${p.deadline || '-'}</td>
+                            <td><span class="badge ${p.priority === 'Urgent' ? 'badge-pending' : 'badge-progress'}">${p.priority || 'Normal'}</span></td>
+                            <td><span class="badge ${p.stage === 'Completed' ? 'badge-success' : 'badge-progress'}">${p.stage}</span></td>
+                            <td><button class="action-btn btn-delete" onclick="deleteProjectById('${empId}', '${p.id}')"><i class="fa-solid fa-trash"></i></button></td>
+                        </tr>`;
+                    });
+                }
+            });
+
+            tbody.innerHTML = html || `<tr><td colspan="6" style="text-align:center;">No active projects recorded.</td></tr>`;
+        }
+
+        function deleteProjectById(empId, projId) {
+            if (confirm("Delete this project?")) {
+                const key = "projects_" + empId;
+                let projects = JSON.parse(localStorage.getItem(key) || "[]");
+                projects = projects.filter(p => p.id !== projId);
+                localStorage.setItem(key, JSON.stringify(projects));
+                loadAdminProjectsTable();
+            }
+        }
+
+        function loadEmployeeProjects(empId) {
+            const container = document.getElementById('employeeProjectsList');
+            const projects = JSON.parse(localStorage.getItem("projects_" + empId) || "[]");
+
+            if (projects.length === 0) {
+                container.innerHTML = "<p style='color: var(--text-muted);'>No projects assigned currently.</p>";
+                return;
+            }
+
+            let html = "";
+            projects.forEach((p) => {
+                html += `<div style="background: rgba(10, 15, 26, 0.7); padding: 14px; margin-bottom: 10px; border-radius: 8px; border: 1px solid var(--border-color);">
+                    <div style="display:flex; justify-content:space-between; align-items:center;">
+                        <strong>${p.title}</strong>
+                        <div>
+                            <span class="badge badge-pending">${p.priority || 'Normal'}</span>
+                        </div>
+                    </div>
+                    <p style="font-size: 11px; color: var(--text-muted); margin: 6px 0;">📅 Deadline: ${p.deadline || 'Not Specified'}</p>
+                    <p style="margin: 8px 0;"><strong>Status:</strong> 
+                        <select onchange="updateProjectStageById('${empId}', '${p.id}', this.value)" style="padding: 4px 8px; font-size: 12px; width: auto; display: inline-block;">
+                            <option value="Not Started" ${p.stage === 'Not Started' ? 'selected' : ''}>Not Started</option>
+                            <option value="In Progress" ${p.stage === 'In Progress' ? 'selected' : ''}>In Progress</option>
+                            <option value="Testing Phase" ${p.stage === 'Testing Phase' ? 'selected' : ''}>Testing Phase</option>
+                            <option value="Completed" ${p.stage === 'Completed' ? 'selected' : ''}>Completed</option>
+                        </select>
+                    </p>
+                    <p style="font-size: 12px; color: #cbd5e1;"><strong>Instructions:</strong> ${p.desc || 'None'}</p>
+                </div>`;
+            });
+            container.innerHTML = html;
+        }
+
+        function updateProjectStageById(empId, projId, newStage) {
+            const projectsKey = "projects_" + empId;
+            const projects = JSON.parse(localStorage.getItem(projectsKey) || "[]");
+            const target = projects.find(p => p.id === projId);
+            if (target) {
+                target.stage = newStage;
+                localStorage.setItem(projectsKey, JSON.stringify(projects));
+            }
+        }
+
+        async function submitLead() {
+            const client = document.getElementById('clientName').value.trim();
+            const phone = document.getElementById('clientPhone').value.trim();
+            const total = parseFloat(document.getElementById('clientTotal').value) || 0;
+            const adv = parseFloat(document.getElementById('clientAdvance').value) || 0;
+            const currentEmp = document.getElementById('empCode').textContent;
+            const msgDiv = document.getElementById('leadMsg');
+
+            if (!client || !phone || total <= 0) {
+                msgDiv.style.color = "#f87171";
+                msgDiv.textContent = "Please fill in client name, phone number, and a valid total amount!";
+                return;
+            }
+
+            if (adv > total) {
+                msgDiv.style.color = "#f87171";
+                msgDiv.textContent = "Advance paid cannot exceed the total contract cost!";
+                return;
+            }
+
+            const pending = Math.max(0, total - adv);
+            const leadData = {
+                id: 'LEAD_' + Date.now(),
+                client,
+                phone,
+                total,
+                adv,
+                pend: pending,
+                emp: currentEmp,
+                date: new Date().toLocaleDateString('en-GB')
+            };
+
+            try {
+                await fetch(`${API_BASE}/leads`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(leadData)
+                });
+
+                msgDiv.style.color = "#34d399";
+                msgDiv.textContent = `New lead created & synced with Cloud DB! Remaining: ₹${pending}`;
+
+                document.getElementById('clientName').value = '';
+                document.getElementById('clientPhone').value = '';
+                document.getElementById('clientTotal').value = '';
+                document.getElementById('clientAdvance').value = '';
+
+                loadMarketingClients(currentEmp);
+            } catch(e) {
+                msgDiv.style.color = "#f87171";
+                msgDiv.textContent = "Error syncing lead with database!";
+            }
+        }
+
+        async function loadMarketingClients(empId) {
+            try {
+                const res = await fetch(`${API_BASE}/leads`);
+                const leads = await res.json();
+                const empLeads = leads.filter(l => l.emp === empId);
+                window.currentEmpLeadsCache = empLeads;
+                renderMarketingClientsList(empLeads);
+            } catch(e) {
+                console.error("Error loading marketing clients", e);
+            }
+        }
+
+        function renderMarketingClientsList(empLeads) {
+            const container = document.getElementById('marketingClientsList');
+            if (empLeads.length === 0) {
+                container.innerHTML = "<p style='font-size: 12px; color: var(--text-muted);'>No client accounts registered yet.</p>";
+                return;
+            }
+
+            let html = "";
+            empLeads.forEach(l => {
+                const statusText = l.pend <= 0 ? 
+                    `<span style="color: #34d399; font-weight: bold;">Fully Cleared</span>` : 
+                    `Pending: <span style="color: #f87171; font-weight: bold;">₹${l.pend.toLocaleString('en-IN')}</span>`;
+
+                html += `<div style="font-size: 12px; border-bottom: 1px solid rgba(255,255,255,0.08); padding-bottom: 8px; margin-bottom: 8px; display: flex; justify-content: space-between; align-items: center;">
+                    <div>
+                        <strong>${l.client}</strong> (${l.phone})<br>
+                        Total: ₹${l.total.toLocaleString('en-IN')} | Paid: ₹${l.adv.toLocaleString('en-IN')} | ${statusText}
+                    </div>
+                    <button class="action-btn btn-invoice" onclick="generateInvoice('${l.id}')"><i class="fa-solid fa-receipt"></i> Receipt</button>
+                </div>`;
+            });
+            container.innerHTML = html;
+        }
+
+        function filterMarketingClients() {
+            const query = (document.getElementById('marketingSearchClient').value || '').toLowerCase();
+            const leads = window.currentEmpLeadsCache || [];
+            const filtered = leads.filter(l => (l.client || '').toLowerCase().includes(query) || (l.phone || '').includes(query));
+            renderMarketingClientsList(filtered);
+        }
+
+        async function loadLeadsTable() {
+            try {
+                const res = await fetch(`${API_BASE}/leads`);
+                const leads = await res.json();
+                window.adminLeadsCache = leads;
+                renderAdminLeadsTable(leads);
+            } catch(e) {
+                console.error("Error loading leads table", e);
+            }
+        }
+
+        function renderAdminLeadsTable(leads) {
+            const tbody = document.getElementById('leadsTableBody');
+            
+            if (leads.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="5" style="text-align:center;">No client leads recorded yet.</td></tr>`;
+                return;
+            }
+
+            let html = "";
+            leads.forEach(l => {
+                const pendDisplay = l.pend <= 0 ? 
+                    `<span style="color: #34d399; font-weight: bold;">Cleared (₹0)</span>` : 
+                    `<span style="color: #f87171; font-weight: bold;">₹${l.pend.toLocaleString('en-IN')}</span>`;
+
+                html += `<tr>
+                    <td><strong>${l.client}</strong><br><small style="color:#94a3b8;">Ph: ${l.phone} | Rep: ${l.emp}</small></td>
+                    <td>₹${l.total.toLocaleString('en-IN')}</td>
+                    <td>₹${l.adv.toLocaleString('en-IN')}</td>
+                    <td>${pendDisplay}</td>
+                    <td>
+                        <button class="action-btn btn-invoice" style="flex: 1;" onclick="generateInvoice('${l.id}')"><i class="fa-solid fa-receipt"></i> Invoice</button>
+                    </td>
+                </tr>`;
+            });
+            tbody.innerHTML = html;
+        }
+
+        function filterAdminLeads() {
+            const query = (document.getElementById('adminSearchClient').value || '').toLowerCase();
+            const leads = window.adminLeadsCache || [];
+            const filtered = leads.filter(l => (l.client || '').toLowerCase().includes(query) || (l.phone || '').includes(query));
+            renderAdminLeadsTable(filtered);
+        }
+
+        async function generateInvoice(leadId) {
+            try {
+                const res = await fetch(`${API_BASE}/leads`);
+                const leads = await res.json();
+                const lead = leads.find(l => l.id === leadId);
+                if (!lead) return;
+
+                const html = `
+                    <table style="width:100%; border:none; margin-bottom: 15px; font-size: 12px;">
+                        <tr>
+                            <td style="border:none; padding: 2px 0;"><strong>Receipt Ref:</strong> ${lead.id}</td>
+                            <td style="border:none; padding: 2px 0; text-align:right;"><strong>Date:</strong> ${lead.date || new Date().toLocaleDateString('en-GB')}</td>
+                        </tr>
+                        <tr>
+                            <td style="border:none; padding: 2px 0;"><strong>Client Name:</strong> ${lead.client}</td>
+                            <td style="border:none; padding: 2px 0; text-align:right;"><strong>Contact:</strong> +91 ${lead.phone}</td>
+                        </tr>
+                        <tr>
+                            <td style="border:none; padding: 2px 0;"><strong>Sales Rep:</strong> ${lead.emp}</td>
+                            <td style="border:none; padding: 2px 0; text-align:right;"><strong>Status:</strong> ${lead.pend <= 0 ? 'Fully Paid' : 'Partial Payment'}</td>
+                        </tr>
+                    </table>
+                    <table style="width:100%; text-align:left; margin-top: 10px;">
+                        <thead>
+                            <tr><th>Description</th><th style="text-align:right;">Amount (₹)</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>Agreed Service / Contract Value</td><td style="text-align:right;">₹${Number(lead.total).toLocaleString('en-IN')}</td></tr>
+                            <tr><td>Total Amount Received to Date</td><td style="text-align:right; color:#34d399; font-weight: bold;">₹${Number(lead.adv).toLocaleString('en-IN')}</td></tr>
+                            <tr><td>Remaining Balance Due</td><td style="text-align:right; color:#f87171; font-weight: bold;">₹${Number(lead.pend).toLocaleString('en-IN')}</td></tr>
+                        </tbody>
+                    </table>
+                `;
+                document.getElementById('invoiceDetails').innerHTML = html;
+                document.getElementById('invoiceModal').style.display = 'flex';
+            } catch(e) {
+                console.error("Error generating invoice", e);
+            }
+        }
+
+        function postAnnouncement() {
+            const msg = document.getElementById('sysNoticeInput').value.trim();
+            if (!msg) return alert("Enter an announcement message!");
+            localStorage.setItem("hub_sys_notice", msg);
+            alert("Broadcast announcement posted!");
+            document.getElementById('sysNoticeInput').value = '';
+        }
+
+        function checkSystemNotice() {
+            const msg = localStorage.getItem("hub_sys_notice");
+            if (msg) {
+                document.getElementById('sysNoticeBanner').style.display = 'block';
+                document.getElementById('sysNoticeText').textContent = msg;
+            }
+        }
+
+        function submitLeaveRequest() {
+            const date = document.getElementById('leaveDateInput').value;
+            const reason = document.getElementById('leaveReasonInput').value.trim();
+            const session = JSON.parse(localStorage.getItem("active_login_session") || "{}");
+            const empId = session.id;
+
+            if (!date || !reason) return alert("Please select date and specify reason!");
+
+            const leavesKey = "leaves_" + empId;
+            const leaves = JSON.parse(localStorage.getItem(leavesKey) || "[]");
+            leaves.push({ date, reason, status: "Submitted" });
+            localStorage.setItem(leavesKey, JSON.stringify(leaves));
+
+            document.getElementById('leaveMsg').textContent = "Leave request submitted successfully!";
+            loadMyLeaves(empId);
+        }
+
+        function loadMyLeaves(empId) {
+            const leaves = JSON.parse(localStorage.getItem("leaves_" + empId) || "[]");
+            const container = document.getElementById('myLeaveList');
+            if (leaves.length === 0) return container.innerHTML = "No leave applications recorded.";
+
+            let html = "";
+            leaves.forEach(l => {
+                html += `<div style="padding: 8px 0; border-bottom: 1px solid rgba(255,255,255,0.08);">📅 ${l.date} — ${l.reason} <span class="badge badge-progress" style="margin-left: 6px;">${l.status}</span></div>`;
+            });
+            container.innerHTML = html;
+        }
+
+        function exportDataBackup() {
+            const backup = {};
+            for (let i = 0; i < localStorage.length; i++) {
+                const key = localStorage.key(i);
+                backup[key] = localStorage.getItem(key);
+            }
+            const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(backup));
+            const downloadAnchor = document.createElement('a');
+            downloadAnchor.setAttribute("href", dataStr);
+            downloadAnchor.setAttribute("download", `Tekkali_ERP_Backup_${new Date().toISOString().slice(0,10)}.json`);
+            document.body.appendChild(downloadAnchor);
+            downloadAnchor.click();
+            downloadAnchor.remove();
+        }
+
+        function triggerDataRestore() {
+            document.getElementById('restoreFile').click();
+        }
+
+        function importDataBackup(event) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                try {
+                    const data = JSON.parse(e.target.result);
+                    localStorage.clear();
+                    for (let key in data) {
+                        localStorage.setItem(key, data[key]);
+                    }
+                    alert("ERP Database restored successfully!");
+                    location.reload();
+                } catch(err) {
+                    alert("Corrupted or invalid backup file!");
+                }
+            };
+            reader.readAsText(event.target.files[0]);
+        }
+
+        function handleLogout() {
+            if (attendanceTimerInterval) clearInterval(attendanceTimerInterval);
+            document.getElementById('adminPanel').style.display = 'none';
+            document.getElementById('employeePanel').style.display = 'none';
+            document.getElementById('loginPanel').style.display = 'block';
+            
+            document.getElementById('loginId').value = '';
+            document.getElementById('loginPass').value = '';
+            document.getElementById('loginError').textContent = '';
+        }
+    </script>
+</body>
+</html>
