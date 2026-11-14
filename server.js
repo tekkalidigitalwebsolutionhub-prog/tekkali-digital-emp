@@ -1,54 +1,46 @@
 const express = require('express');
 const mongoose = require('mongoose');
-const dotenv = require('dotenv');
 const cors = require('cors');
-
-dotenv.config();
+require('dotenv').config();
 
 const app = express();
-
-app.use(express.json({ limit: '10mb' })); // పెద్ద ఇమేజ్ / ప్రొఫైల్ ఫోటోల కోసం లిమిట్ పెంచాం
+app.use(express.json({ limit: '15mb' })); // పెద్ద ప్రొఫైల్ ఫోటోలు లేదా డేటా సేవ్ కావడానికి
 app.use(cors());
 
-const PORT = process.env.PORT || 5000;
+// MongoDB Atlas Cloud Database Connection
 const MONGO_URI = process.env.MONGO_URI;
-
-// MongoDB Atlas కనెక్షన్
-mongoose.connect(MONGO_URI)
-.then(() => {
+mongoose.connect(MONGO_URI, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+}).then(() => {
     console.log("MongoDB Atlas Cloud Database Connected Successfully!");
-})
-.catch((err) => {
-    console.error("MongoDB Connection Error:", err.message);
+}).catch(err => {
+    console.error("MongoDB Connection Error:", err);
 });
 
-// --- MONGOOSE SCHEMAS & MODELS ---
+// 1. User Schema & Model (Admin & Staff Accounts Sync)
 const userSchema = new mongoose.Schema({
-    userId: { type: String, unique: true, required: true },
-    name: String,
-    pass: String,
-    role: String,
-    phone: String,
-    email: String,
-    address: String,
-    photo: String
+    userId: { type: String, required: true, unique: true },
+    data: { type: Object, required: true }
 });
-const User = mongoose.model('User', userSchema);
+const CloudUser = mongoose.model('CloudUser', userSchema);
 
+// 2. Lead / Client Schema & Model (Marketing & Finance Sync)
 const leadSchema = new mongoose.Schema({
-    id: String,
+    id: { type: String, required: true, unique: true },
     client: String,
-    phone: { type: String, unique: true },
+    phone: String,
     total: Number,
     adv: Number,
     pend: Number,
     emp: String,
     date: String
 });
-const Lead = mongoose.model('Lead', leadSchema);
+const CloudLead = mongoose.model('CloudLead', leadSchema);
 
+// 3. Support Call Schema & Model (Customer Support Logs Sync)
 const supportCallSchema = new mongoose.Schema({
-    id: String,
+    id: { type: String, required: true, unique: true },
     callerName: String,
     callerPhone: String,
     category: String,
@@ -57,81 +49,103 @@ const supportCallSchema = new mongoose.Schema({
     agentId: String,
     timestamp: String
 });
-const SupportCall = mongoose.model('SupportCall', supportCallSchema);
+const CloudSupportCall = mongoose.model('CloudSupportCall', supportCallSchema);
+
 
 // --- API ROUTES ---
 
-// 1. Get All Users
+// Get All Users (Admin & Staff)
 app.get('/api/users', async (req, res) => {
     try {
-        const users = await User.find();
-        let userMap = {};
+        const users = await CloudUser.find({});
+        const usersMap = {};
         users.forEach(u => {
-            userMap[u.userId] = { name: u.name, pass: u.pass, role: u.role, phone: u.phone, email: u.email, address: u.address, photo: u.photo };
+            usersMap[u.userId] = u.data;
         });
-        res.json(userMap);
+        res.json(usersMap);
     } catch (err) {
-        res.status(500).json({ error: err.message });
+        res.status(500).json({ error: "Failed to fetch users from cloud" });
     }
 });
 
-// 2. Save / Update User
+// Save or Update User (Admin Password, Staff Passwords & Profiles Sync)
 app.post('/api/users', async (req, res) => {
     try {
         const { userId, data } = req.body;
-        await User.findOneAndUpdate({ userId }, { userId, ...data }, { upsert: true, new: true });
-        res.json({ success: true });
+        if (!userId) {
+            return res.status(400).json({ error: "UserId is required" });
+        }
+
+        if (data === null) {
+            await CloudUser.deleteOne({ userId });
+            return res.json({ success: true, message: "User deleted" });
+        }
+
+        await CloudUser.findOneAndUpdate(
+            { userId: userId },
+            { userId: userId, data: data },
+            { upsert: true, new: true }
+        );
+
+        res.json({ success: true, message: "User data synced successfully to MongoDB!" });
     } catch (err) {
-        res.status(500).json({ error: err.message });
+        console.error("Error saving user:", err);
+        res.status(500).json({ error: "Failed to sync user data to cloud" });
     }
 });
 
-// 3. Get All Leads
+// Get All Client Leads
 app.get('/api/leads', async (req, res) => {
     try {
-        const leads = await Lead.find();
+        const leads = await CloudLead.find({});
         res.json(leads);
     } catch (err) {
-        res.status(500).json({ error: err.message });
+        res.status(500).json({ error: "Failed to fetch leads" });
     }
 });
 
-// 4. Save / Update Lead
+// Create or Save Client Lead
 app.post('/api/leads', async (req, res) => {
     try {
         const leadData = req.body;
-        await Lead.findOneAndUpdate({ phone: leadData.phone }, leadData, { upsert: true, new: true });
-        res.json({ success: true });
+        await CloudLead.findOneAndUpdate(
+            { id: leadData.id },
+            leadData,
+            { upsert: true, new: true }
+        );
+        res.json({ success: true, message: "Lead saved successfully" });
     } catch (err) {
-        res.status(500).json({ error: err.message });
+        res.status(500).json({ error: "Failed to save lead" });
     }
 });
 
-// 5. Get Support Calls
+// Get All Support Calls
 app.get('/api/support-calls', async (req, res) => {
     try {
-        const calls = await SupportCall.find().sort({ _id: -1 });
+        const calls = await CloudSupportCall.find({});
         res.json(calls);
     } catch (err) {
-        res.status(500).json({ error: err.message });
+        res.status(500).json({ error: "Failed to fetch support calls" });
     }
 });
 
-// 6. Save Support Call
+// Log Support Call
 app.post('/api/support-calls', async (req, res) => {
     try {
         const callData = req.body;
-        await SupportCall.create(callData);
-        res.json({ success: true });
+        await CloudSupportCall.findOneAndUpdate(
+            { id: callData.id },
+            callData,
+            { upsert: true, new: true }
+        );
+        res.json({ success: true, message: "Support call logged successfully" });
     } catch (err) {
-        res.status(500).json({ error: err.message });
+        res.status(500).json({ error: "Failed to log support call" });
     }
 });
 
-app.get('/', (req, res) => {
-    res.send("Tekkali Digital & Web Solutions Hub - Cloud ERP Backend is Running Live!");
-});
-
+// Port configuration
+const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
-    console.log(`Server is running live on port ${PORT}`);
+    console.log(`Server running on port ${PORT}`);
 });
